@@ -1,6 +1,6 @@
 """
 **@author : Kevin KURTZ**
-**@email : kevin.kurtz@efrei.net**
+**@email : contact@kevin-kurtz.fr**
 """
 
 # -------------------------- import libraries -------------------------- #
