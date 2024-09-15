@@ -11,9 +11,9 @@ import requests
 
 
 # -------------------------- Load data -------------------------- #
-data_emissions = pd.read_csv('emissions_ges_france.csv')
-data_coordinates = pd.read_csv('communes_coordinates.csv', sep='|')
-data_dep = pd.read_csv('communes-departement-region.csv')
+data_emissions = pd.read_csv('csv-data/emissions_ges_france.csv')
+data_coordinates = pd.read_csv('csv-data/communes_coordinates.csv', sep='|')
+data_dep = pd.read_csv('csv-data/communes-departement-region.csv')
 
 
 # -------------------------- Set page config -------------------------- #
