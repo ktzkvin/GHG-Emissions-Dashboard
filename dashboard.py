@@ -8,6 +8,9 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import requests
+import requests
+import io
+import zipfile
 
 
 # -------------------------- Load data -------------------------- #
@@ -129,48 +132,30 @@ def france_heatmap():
 with st.sidebar:
     st.title('🛠️ Contrôles du Tableau de Bord')
 
-    # CO₂ Equivalents Section
-    st.markdown('## ☁ CO₂ Equivalents')
+    # Sélection de l'unité
+    st.markdown('## ☁ CO₂ Equivalent')
 
-    # Commune Selection
-    communes = data_merged['Commune_LF'].unique()
-    selected_commune = st.selectbox('Total Emissions for', options=communes)
-
-    # Total Emissions for Selected Commune
-    total_co2 = data_merged[data_merged['Commune_LF'] == selected_commune]['Total'].values[0]
-    st.write(f"{total_co2:,.2f} tonnes of CO₂eq")
-
-    # Equivalents Dictionary
-    equivalents = {
-        '🚗 Kilometers driven in a gasoline car': total_co2 * 4_596,
-        '✈️ Kilometers flown in a plane': total_co2 * 4_348,
-        '🚄 Kilometers traveled by TGV': total_co2 * 423_729,
-        '📱 Smartphones produced': total_co2 * 32,
-        '👖 Jeans produced': total_co2 * 42,
-        '🍔 Beef burgers consumed': total_co2 * 138,
-        '📺 Hours of video streaming': total_co2 * 15_621,
-        '💡 Years of electric heating': total_co2 * 1.5,
+    equivalents_factors = {
+        '☁ Tonnes of CO₂eq': 1,
+        '🚗 Km driven in a gasoline car': 4_596,
+        '✈️ Km flown in a plane': 4_348,
+        '🚄 Km traveled by TGV': 423_729,
+        '📱 Smartphones produced': 32,
+        '👖 Jeans produced': 42,
+        '🍔 Beef burgers consumed': 167,
+        '📺 Hours of video streaming': 15_621,
+        '💡 Years of electric heating': 1.5,
     }
 
-    # Equivalents Selection
-    selected_equivalents = st.multiselect(
-        'Select equivalents to display:',
-        options=list(equivalents.keys()),
-        default=['🚗 Kilometers driven in a gasoline car', '📱 Smartphones produced', '📺 Hours of video streaming']
-    )
-
-    # Display Equivalents
-    st.markdown('### This is equivalent to:')
-    for key in selected_equivalents:
-        value = equivalents[key]
-        st.write(f"- **{value:,.0f}** {key}")
+    selected_unit = st.selectbox('Select unit for CO₂eq', options=list(equivalents_factors.keys()), index=0)
+    unit_factor = equivalents_factors[selected_unit]
 
     # Glossary Section
     st.markdown('## 📖 Glossary')
     st.info('''
     **CO₂ Equivalent (CO₂eq)**: A metric measure used to compare the emissions from various greenhouse gases based on their global warming potential.
 
-    **Tonne of CO₂eq**: One metric tonne (1,000 kilograms) of carbon dioxide or an equivalent amount of other greenhouse gases with the same global warming potential.
+    **Tonnes of CO₂eq**: One metric tonne (1,000 kilograms) of carbon dioxide or an equivalent amount of other greenhouse gases with the same global warming potential.
 
     **Sectors Explained**:
 
@@ -185,21 +170,31 @@ with st.sidebar:
     ''')
 
     # Download Data Section
-    st.markdown('## 📥 Download Data')
-    csv_data = data_emissions.to_csv(index=False)
+    csv_emissions = data_emissions.to_csv(index=False)
+    csv_coordinates = data_coordinates.to_csv(index=False)
+    csv_dep = data_dep.to_csv(index=False)
+
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+        zip_file.writestr('emissions_ges_france.csv', csv_emissions)
+        zip_file.writestr('communes_coordinates.csv', csv_coordinates)
+        zip_file.writestr('communes-departement-region.csv', csv_dep)
+    zip_buffer.seek(0)
+
+    # Create a download button for the ZIP file
     st.download_button(
-        label='Download Emissions Data (CSV)',
-        data=csv_data,
-        file_name='emissions_data.csv',
-        mime='text/csv'
+        label='Download Data Files (ZIP)',
+        data=zip_buffer,
+        file_name='data_files.zip',
+        mime='application/zip'
     )
 
     st.markdown('---')
-    st.write('For more information, visit my [Repos GitHub](https://github.com/ktzkvin/GHG-Emissions-Dashboard/tree/main)')
+    st.write('For more information, visit my [GitHub](https://github.com/ktzkvin/GHG-Emissions-Dashboard/tree/main)')
 
 
 # ---------------------------- Main page ----------------------------- #
-st.title('🏭 Greenhouse Gas Emissions in France')
+st.title('🏭 Greenhouse Gas Emissions in Franced')
 st.markdown('---')
 
 # Columns
@@ -272,22 +267,32 @@ with col[1]:
 with col[2]:
     st.markdown('#### 🥇 Top Communes')
     st.write("")
-    data_merged_sorted = data_merged.sort_values(by='Total', ascending=False)
+    data_merged_sorted = data_merged.sort_values(by='Total', ascending=False).copy()
 
-    st.dataframe(data_merged_sorted,
-                 hide_index=True,
-                 column_order=['Commune_LF', 'Total'],
-                 column_config={
-                     'Commune_LF': st.column_config.TextColumn('Commune'),
-                     'Total': st.column_config.ProgressColumn('Tonne of CO₂eq', format='%.2f', min_value=0, max_value=max(data_merged['Total']))
-                     },
-                 width=800
-                 )
+    #
+    data_merged_sorted['Total_converted'] = data_merged_sorted['Total'] * unit_factor
+    max_total_converted = data_merged['Total'].max() * unit_factor
+
+    st.dataframe(
+        data_merged_sorted,
+        hide_index=True,
+        column_order=['Commune_LF', 'Total_converted'],
+        column_config={
+            'Commune_LF': st.column_config.TextColumn('Commune'),
+            'Total_converted': st.column_config.ProgressColumn(
+                selected_unit,
+                format='%.2f',
+                min_value=0,
+                max_value=max_total_converted
+            )
+        },
+        width=800
+    )
     st.markdown("<br>", unsafe_allow_html=True)
-
 
     with st.expander('🔍 Details', expanded=True):
         st.write('''
         - Data source: [Inventaire de gaz a effet de serre territorialisé](https://www.data.gouv.fr/fr/datasets/inventaire-de-gaz-a-effet-de-serre-territorialise/)  (Data Gouv)
         - :orange[**Note**]: The data is from **2016** and is subject to change.
         ''')
+        st.caption('Conversion factors based on [Alterna Énergie](https://www.alterna-energie.fr/blog-article/1-tonne-de-co2-equivalent-comprendre-cet-indice#:~:text=Le%20terme%20%E2%80%9CCO%E2%82%82%20%C3%A9quivalent%E2%80%9D%20(,%2C%20protoxyde%20d\'azote%E2%80%A6)).')
