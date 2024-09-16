@@ -4,7 +4,7 @@ Welcome to the interactive dashboard for greenhouse gas (GHG) emissions in Franc
 
 ## 📋 Features
 
-- 📊 **Emissions Visualization**: A map of France with a choropleth of emissions by department.
+- 😶‍🌫️ **Emissions Visualization**: A map of France with a choropleth of emissions by department.
 - 🏆 **Top Communes and Departments**: Display of the most and least polluting departments.
 - 📊 **Emissions by Sector**: Detailed charts showing emissions by various sectors (agriculture, transport, industry, etc.).
 - 💾 **Data Download**: Download raw data files in CSV format.
@@ -67,13 +67,9 @@ An interactive bar chart to explore emissions across different sectors.
 - **Plotly** for interactive charts.
 - **Pandas** for data manipulation.
 
-## 📥 Download Data
-
-Click the integrated download button on the dashboard to retrieve the CSV files used in this project.
-
 ## 💡 Notes
 
-- The data is based on the 2016 territorial greenhouse gas inventory. The data is subject to updates.
-- CO₂eq conversion factors are sourced from reliable sources like **Alterna Énergie**.
+- The data is based on the [2016 territorial greenhouse gas inventory](https://www.data.gouv.fr/fr/datasets/inventaire-de-gaz-a-effet-de-serre-territorialise/). The data is subject to updates.
+- CO₂eq conversion factors are sourced from reliable sources like [Alterna Énergie](https://www.alterna-energie.fr/blog-article/1-tonne-de-co2-equivalent-comprendre-cet-indice#:~:text=Le%20terme%20%E2%80%9CCO%E2%82%82%20%C3%A9quivalent%E2%80%9D%20(,%2C%20protoxyde%20d\'azote%E2%80%A6)).
 
 ---
