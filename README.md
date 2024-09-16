@@ -59,7 +59,7 @@ Discover the Communes and the Departments with the highest and lowest CO₂eq em
 
 ### Emissions by Sector
 
-An interactive bar chart to explore emissions across different sectors : agriculture, transport, waste, etc.
+An interactive bar chart to explore emissions across different sectors : _agriculture, transport, waste,_ etc.
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;![Sector Emissions](screenshots/sector_emissions.png)
 
