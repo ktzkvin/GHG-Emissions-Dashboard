@@ -193,7 +193,7 @@ with st.sidebar:
 
 
 # ---------------------------- Main page ----------------------------- #
-st.title('🏭 Greenhouse Gas Emissions in Franced')
+st.title('🏭 Greenhouse Gas Emissions in France')
 st.markdown('---')
 
 # Columns
