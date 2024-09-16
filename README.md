@@ -54,12 +54,12 @@ Visualize the total GHG emissions by department across an interactive map.
 Discover the Communes and the Departments with the highest and lowest CO₂eq emissions.
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;![Top Pollutant Communes](screenshots/top_communes.png)<br>
-&emsp;&emsp;&emsp;&emsp;![Top Pollutant Departments](screenshots/top_departments_1.png)
+&emsp;&emsp;&emsp;![Top Pollutant Departments](screenshots/top_departments_1.png)
 &emsp;&emsp;&emsp;&emsp;![Top Pollutant Departments](screenshots/top_departments_2.png)
 
 ### Emissions by Sector
 
-An interactive bar chart to explore emissions across different sectors.
+An interactive bar chart to explore emissions across different sectors : agriculture, transport, waste, etc.
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;![Sector Emissions](screenshots/sector_emissions.png)
 
