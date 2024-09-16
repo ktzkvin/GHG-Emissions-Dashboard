@@ -129,7 +129,7 @@ def france_heatmap():
 
 # ---------------------------- Sidebar ----------------------------- #
 with st.sidebar:
-    st.title('🛠️ Contrôles du Tableau de Bord')
+    st.title('🛠️ Dashboard Controls')
 
     # Sélection de l'unité
     st.markdown('## ☁ CO₂ Equivalent')
