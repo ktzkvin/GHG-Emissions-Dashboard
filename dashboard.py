@@ -205,7 +205,7 @@ fig_top_pie = px.pie(
     top_departements, 
     names='Département', 
     values='Total', 
-    title='Worst Departments (➕ Pollutants)',
+    title='Worst Departments (+ Pollutants)',
     labels={'Département': '', 'Total': ''},  
     color_discrete_sequence=px.colors.sequential.Reds_r
 )
@@ -215,7 +215,7 @@ fig_bottom_pie = px.pie(
     bottom_departements, 
     names='Département', 
     values='Total', 
-    title='Best Departments (➖ Pollutants)',
+    title='Best Departments (- Pollutants)',
     labels={'Département': '', 'Total': ''},  
     color_discrete_sequence=px.colors.sequential.YlGn
 )
