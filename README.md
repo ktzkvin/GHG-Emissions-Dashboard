@@ -41,8 +41,6 @@ Ensure you have **Python 3.8+** and **Streamlit** installed.
 
 2. Access the dashboard via your browser at: `http://localhost:8501`.
 
-![Screenshot Heatmap](screenshots/heatmap_emissions.png)
-
 ## 📊 Example Visualizations
 
 ### Emissions Map by Department
@@ -51,11 +49,13 @@ Visualize the total GHG emissions by department across an interactive map.
 
 ![France Heatmap](screenshots/france_heatmap.png)
 
-### Top Polluting Departments
+### Top Polluting Communes and Departments
 
-Discover the departments with the highest and lowest CO₂eq emissions.
+Discover the Communes and the Departments with the highest and lowest CO₂eq emissions.
 
-![Top Pollutant Departments](screenshots/top_pollutants.png)
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;![Top Pollutant Communes](screenshots/top_communes.png)
+![Top Pollutant Departments](screenshots/top_departments_1.png)
+![Top Pollutant Departments](screenshots/top_departments_2.png)
 
 ### Emissions by Sector
 
