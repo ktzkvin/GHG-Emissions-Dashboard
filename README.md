@@ -61,7 +61,7 @@ Discover the Communes and the Departments with the highest and lowest CO₂eq em
 
 An interactive bar chart to explore emissions across different sectors.
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;![Sector Emissions](screenshots/sector_emissions.png)
+&emsp;[Sector Emissions](screenshots/sector_emissions.png)
 
 ## 🧩 Technologies Used
 
