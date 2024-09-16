@@ -55,7 +55,7 @@ Discover the Communes and the Departments with the highest and lowest CO₂eq em
 
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;![Top Pollutant Communes](screenshots/top_communes.png)
 ![Top Pollutant Departments](screenshots/top_departments_1.png)
-&emsp;&emsp;&emsp;&emsp;![Top Pollutant Departments](screenshots/top_departments_2.png)
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;![Top Pollutant Departments](screenshots/top_departments_2.png)
 
 ### Emissions by Sector
 
