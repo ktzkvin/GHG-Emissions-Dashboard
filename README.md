@@ -1,6 +1,7 @@
 # 🏭 GHG Emissions Dashboard - France
 
-Welcome to the interactive dashboard for greenhouse gas (GHG) emissions in France! 🌍 This project uses **Streamlit** and **Plotly** to visualize emissions by sector and department, with interactive options to explore data in various CO₂ equivalent units.
+Welcome to the interactive dashboard for greenhouse gas (GHG) emissions in France! 🌍 <br>
+This project uses **Streamlit** and **Plotly** to visualize emissions by sector and department, with interactive options to explore data in various CO₂ equivalent units.
 
 ## 📋 Features
 
