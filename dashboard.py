@@ -153,20 +153,20 @@ with st.sidebar:
     # Glossary Section
     st.markdown('## 📖 Glossary')
     st.info('''
-    **CO₂ Equivalent (CO₂eq)**: A metric measure used to compare the emissions from various greenhouse gases based on their global warming potential.
+    **🌍 CO₂ Equivalent (CO₂eq)**: Compares emissions from different greenhouse gases based on their global warming potential.
 
-    **Tonnes of CO₂eq**: One metric tonne (1,000 kilograms) of carbon dioxide or an equivalent amount of other greenhouse gases with the same global warming potential.
+    **🛢️ Tonnes of CO₂eq**: One metric tonne (1,000 kg) of CO₂ or equivalent amount of other greenhouse gases.
 
-    **Sectors Explained**:
+    **📌 Sectors**:
 
-    - **Agriculture**: Emissions from farming activities, including livestock and crop cultivation.
-    - **Transport**: Emissions from vehicles, planes, ships, and other modes of transportation.
-    - **Industry**: Emissions from industrial processes and manufacturing.
-    - **Residential**: Emissions from household energy use and activities.
-    - **Tertiary**: Emissions from service industries such as retail, hospitality, and education.
-    - **Energy**: Emissions from the production and consumption of energy.
-    - **Waste**: Emissions from waste management processes like landfilling and recycling.
-    - **Road**: Emissions specifically from road transport vehicles.
+    - **🌾 Agriculture**: Emissions from farming activities.
+    - **🚗 Transport**: Emissions from vehicles, planes, ships.
+    - **🏭 Industry**: Emissions from industrial processes.
+    - **🏠 Residential**: Emissions from household energy use.
+    - **🏢 Tertiary**: Emissions from service industries.
+    - **⚡ Energy**: Emissions from energy production/consumption.
+    - **♻️ Waste**: Emissions from waste management.
+    - **🛣️ Road**: Emissions specifically from road transport.
     ''')
 
     # Download Data Section
