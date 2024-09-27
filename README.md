@@ -11,7 +11,7 @@ This project uses **Streamlit** and **Plotly** to visualize emissions by sector 
 - 📊 **Emissions by Sector**: Detailed charts showing emissions by various sectors (agriculture, transport, industry, etc.).
 - 💾 **Data Download**: Download raw data files in CSV format.
 
-![Dashboard Screenshot](screenshots/dashboard_overview.png)
+![Dashboard Screenshot](screenshots/dashboard_overview.png){width=100% height=auto}
 
 ## 🚀 Installation and Setup
 
