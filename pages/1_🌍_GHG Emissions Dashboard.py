@@ -268,7 +268,6 @@ with col[2]:
     st.write("")
     data_merged_sorted = data_merged.sort_values(by='Total', ascending=False).copy()
 
-    #
     data_merged_sorted['Total_converted'] = data_merged_sorted['Total'] * unit_factor
     max_total_converted = data_merged['Total'].max() * unit_factor
 
