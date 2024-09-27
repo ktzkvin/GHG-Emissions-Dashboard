@@ -12,12 +12,12 @@ import io
 import zipfile
 
 
-# -------------------------- Load data -------------------------- #
+# ------------------------------ Load data ------------------------------ #
 data_emissions = pd.read_csv('csv-data/emissions_ges_france.csv')
 data_dep = pd.read_csv('csv-data/communes-departement-region.csv')
 
 
-# -------------------------- Set page config -------------------------- #
+# --------------------------- Set page config --------------------------- #
 st.set_page_config(
     page_title="GHG Emissions - Dashboard",
     page_icon="🏭",
@@ -26,7 +26,7 @@ st.set_page_config(
 )
 
 
-# -------------------------- Clean emissions data -------------------------- #
+# ------------------------ Clean emissions data ------------------------- #
 data_emissions['Commune_LF'] = data_emissions['Commune']  # Clone
 data_emissions['Commune_LF'] = data_emissions['Commune_LF'].str.title()
 data_emissions['Commune'] = data_emissions['Commune'].str.replace('-', '').str.replace(' ', '').str.replace('\'', '').str.normalize('NFKD').str.encode('ascii', errors='ignore').str.decode('utf-8')
@@ -57,7 +57,7 @@ paris_grouped['Commune_LF'] = 'Paris'
 data_emissions = pd.concat([other_data, paris_grouped], ignore_index=True)
 
 
-# ---------------------------- Clean temp data ----------------------------- #
+# --------------------------- Clean temp data ---------------------------- #
 data_dep = data_dep[['nom_commune_complet', 'nom_departement']]
 data_dep = data_dep.rename(columns={'nom_departement': 'Département', 'nom_commune_complet': 'Commune'})
 data_dep['Commune'] = data_dep['Commune'].str.upper()
@@ -68,7 +68,7 @@ data_dep = data_dep.replace({'PARIS01': 'PARIS', 'PARIS02': 'PARIS', 'PARIS03': 
 data_dep = data_dep.drop_duplicates(subset='Commune')
 
 
-# ---------------------------- Merge all data ----------------------------- #
+# ---------------------------- Merge all data ---------------------------- #
 data_merged = pd.merge(data_emissions, data_dep, on='Commune', how='left')
 
 # Arrange columns
@@ -84,7 +84,7 @@ data_merged[['Agriculture', 'Autres transports', 'Autres transports internationa
 data_merged['Total'] = data_merged[['Agriculture', 'Autres transports', 'Autres transports international', 'CO2 biomasse hors-total', 'Déchets', 'Energie', 'Industrie hors-énergie', 'Résidentiel', 'Routier', 'Tertiaire']].sum(axis=1)
 
 
-# ---------------------------- Functions ----------------------------- #
+# ------------------------------ Functions ------------------------------- #
 
 def france_heatmap():
         
@@ -119,7 +119,7 @@ def france_heatmap():
     st.plotly_chart(fig_map, use_container_width=True)
 
 
-# ---------------------------- Sidebar ----------------------------- #
+# ------------------------------ Sidebar -------------------------------- #
 with st.sidebar:
     st.title('🛠️ Dashboard Controls')
 
@@ -182,7 +182,7 @@ with st.sidebar:
     st.write('For more information, visit my [GitHub](https://github.com/ktzkvin/GHG-Emissions-Dashboard/tree/main)')
 
 
-# ---------------------------- Main page ----------------------------- #
+# ------------------------------ Main page ------------------------------- #
 st.title('🏭 Greenhouse Gas Emissions in France')
 st.markdown('---')
 
@@ -257,7 +257,6 @@ with col[2]:
     st.markdown('#### 🥇 Top Communes')
     st.write("")
     data_merged_sorted = data_merged.sort_values(by='Total', ascending=False).copy()
-
     data_merged_sorted['Total_converted'] = data_merged_sorted['Total'] * unit_factor
     max_total_converted = data_merged['Total'].max() * unit_factor
 
