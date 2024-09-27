@@ -14,7 +14,6 @@ import zipfile
 
 # -------------------------- Load data -------------------------- #
 data_emissions = pd.read_csv('csv-data/emissions_ges_france.csv')
-data_coordinates = pd.read_csv('csv-data/communes_coordinates.csv', sep='|')
 data_dep = pd.read_csv('csv-data/communes-departement-region.csv')
 
 
@@ -25,6 +24,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
 
 # -------------------------- Clean emissions data -------------------------- #
 data_emissions['Commune_LF'] = data_emissions['Commune']  # Clone
@@ -68,15 +68,8 @@ data_dep = data_dep.replace({'PARIS01': 'PARIS', 'PARIS02': 'PARIS', 'PARIS03': 
 data_dep = data_dep.drop_duplicates(subset='Commune')
 
 
-# ------------------------- Clean coordinates data ------------------------- #
-data_coordinates['Commune'] = data_coordinates['Commune'].str.upper()
-data_coordinates['Commune'] = data_coordinates['Commune'].str.replace('-', '').str.replace(' ', '').str.replace('\'', '').str.normalize('NFKD').str.encode('ascii', errors='ignore').str.decode('utf-8')
-data_coordinates = data_coordinates.drop(columns=['id'])
-
-
 # ---------------------------- Merge all data ----------------------------- #
-data_merged = pd.merge(data_emissions, data_coordinates, on='Commune', how='left')
-data_merged = pd.merge(data_merged, data_dep, on='Commune', how='left')
+data_merged = pd.merge(data_emissions, data_dep, on='Commune', how='left')
 
 # Arrange columns
 cols = data_merged.columns.tolist()
@@ -126,7 +119,6 @@ def france_heatmap():
     st.plotly_chart(fig_map, use_container_width=True)
 
 
-
 # ---------------------------- Sidebar ----------------------------- #
 with st.sidebar:
     st.title('🛠️ Dashboard Controls')
@@ -170,13 +162,11 @@ with st.sidebar:
 
     # Download Data Section
     csv_emissions = data_emissions.to_csv(index=False)
-    csv_coordinates = data_coordinates.to_csv(index=False)
     csv_dep = data_dep.to_csv(index=False)
 
     zip_buffer = io.BytesIO()
     with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
         zip_file.writestr('emissions_ges_france.csv', csv_emissions)
-        zip_file.writestr('communes_coordinates.csv', csv_coordinates)
         zip_file.writestr('communes-departement-region.csv', csv_dep)
     zip_buffer.seek(0)
 

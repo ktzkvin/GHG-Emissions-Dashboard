@@ -1,3 +1,8 @@
+"""
+**@author : Kevin KURTZ**
+**@email : contact@kevin-kurtz.fr**
+"""
+
 import streamlit as st
 
 st.set_page_config(page_title="Kevin Kurtz", page_icon="👋", layout="centered")
