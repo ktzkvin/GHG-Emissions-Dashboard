@@ -41,6 +41,8 @@ Ensure you have **Python 3.8+** and **Streamlit** installed.
 
 2. Access the dashboard via your browser at: `http://localhost:8501`.
 
+3. The app also includes my **🎨Portfolio** page showcasing my personal projects. Feel free to explore!
+
 ## 📊 Example Visualizations
 
 ### Emissions Map by Department
