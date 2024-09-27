@@ -37,7 +37,7 @@ Ensure you have **Python 3.8+** and **Streamlit** installed.
 1. Run the application using **Streamlit**:
 
    ```bash
-   streamlit run dashboard.py
+   streamlit run Home.py
 
 2. Access the dashboard via your browser at: `http://localhost:8501`.
 
