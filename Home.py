@@ -19,23 +19,23 @@ st.markdown(
         font-size: 1.1em;
         max-width: 600px;
         margin: 0 auto;
-        text-align: justify;
+        text-align: left;
     }
     .emoji-container {
         display: flex;
-        align-items: center; /* Alignement vertical du texte et de l'emoji */
+        align-items: center;
         position: absolute;
-        top: -350px; /* Position que tu avais spécifiée */
-        left: -420px; /* Position que tu avais spécifiée */
+        top: -350px;
+        left: -420px;
     }
     .floating-emoji {
-        font-size: 1.5em; /* Taille plus petite */
-        animation: bounce 0.8s infinite alternate; /* Animation rapide */
-        margin-right: 10px; /* Espace entre l'emoji et le texte */
+        font-size: 1.5em;
+        animation: bounce 0.8s infinite alternate;
+        margin-right: 10px;
     }
     .static-text {
-        font-size: 1.1em; /* Taille du texte statique */
-        color: #ffffff; /* Couleur du texte */
+        font-size: 1.1em;
+        color: #ffffff;
     }
     @keyframes bounce {
         0% { transform: translateX(0); }
