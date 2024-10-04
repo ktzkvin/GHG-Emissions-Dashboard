@@ -4,6 +4,10 @@ Welcome to the interactive dashboard for greenhouse gas (GHG) emissions in Franc
 
 This project uses **Streamlit** and **Plotly** to visualize emissions by sector and department, with interactive options to explore data in various CO₂ equivalent units.
 
+## 👤 Author
+[![GitHub](https://img.shields.io/badge/GitHub-ktzkvin-blue?logo=github&style=flat-square)](https://github.com/ktzkvin)  
+[![Mail](https://img.shields.io/badge/mail-kevin.kurtz@efrei.net-blue?logo=gmail&style=flat-square)](mailto:kevin.kurtz@efrei.net)
+
 ## 📋 Features
 
 - 😶‍🌫️ **Emissions Visualization**: A map of France with a choropleth of emissions by department.
