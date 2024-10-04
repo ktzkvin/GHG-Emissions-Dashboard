@@ -74,7 +74,7 @@ st.markdown(
 )
 
 with st.sidebar:
-    st.markdown("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+    st.markdown("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
     st.markdown("## Keep in Touch")
     st.markdown("📧 [Email me](mailto:contact@kevin-kurtz.fr)")
     st.markdown("💻 [GitHub](https://github.com/ktzkvin)")

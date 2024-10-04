@@ -8,7 +8,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# --------------------------- Set page config ---------------------------- #
+# --------------------------- Page Configuration ---------------------------- #
 st.set_page_config(page_title="Portfolio - Kevin Kurtz", page_icon="🎓", layout="wide")
 
 # --------------------------- Sidebar Contact ---------------------------- #
