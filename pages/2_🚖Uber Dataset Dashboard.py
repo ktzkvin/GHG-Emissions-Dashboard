@@ -29,7 +29,7 @@ def load_data():
     df['tpep_pickup_datetime'] = pd.to_datetime(df['tpep_pickup_datetime'])
     df['tpep_dropoff_datetime'] = pd.to_datetime(df['tpep_dropoff_datetime'])
     df['hour_pickup'] = df['tpep_pickup_datetime'].dt.hour
-    df['hour_dropoff'] = df['tpep_dropoff_datetime'].dt.hour  # Corrigé pour dropoff
+    df['hour_dropoff'] = df['tpep_dropoff_datetime'].dt.hour
     df['day_pickup'] = df['tpep_pickup_datetime'].dt.day_name()
     df['trip_distance'] = pd.to_numeric(df['trip_distance'], errors='coerce')
     df['fare_amount'] = pd.to_numeric(df['fare_amount'], errors='coerce')
