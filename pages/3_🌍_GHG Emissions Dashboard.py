@@ -25,6 +25,29 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# ----------------------- State to manage popup ------------------------- #
+if 'show_dialog' not in st.session_state:
+    st.session_state.show_dialog = True
+if 'dialog_shown_once' not in st.session_state:
+    st.session_state.dialog_shown_once = False
+
+
+# --------------------------- Popup Window ------------------------------ #
+@st.dialog("Welcome to the GHG Emissions Dashboard 🏭", width="large")
+def welcome_dialog():
+    st.markdown("This dashboard provides an interactive view of **Greenhouse Gas Emissions** data in France by Communes in 2016 (data from data.gouv.fr).")
+    st.markdown("Explore emissions by sectors, compare the 🌟 most and ❌ least polluting areas but also how CO₂ emissions are distributed across the country.")
+    st.image("screenshots/ghg_illustration.jpg")
+
+def close_dialog():
+    st.session_state.show_dialog = False
+
+# Appel de la fonction de la boîte de dialogue
+if st.session_state.show_dialog and not st.session_state.dialog_shown_once:
+    welcome_dialog()
+    st.button("Close", on_click=close_dialog)
+    st.session_state.dialog_shown_once = True
+
 
 # ------------------------ Clean emissions data ------------------------- #
 
@@ -268,7 +291,7 @@ with col[0]:
         fig_bottom_pie.update_layout(showlegend=False, margin=dict(t=50, b=30, l=0, r=0), height=300, width=300)
         st.plotly_chart(fig_bottom_pie, use_container_width=True)
 
-# MAP and sector breakdown (Use Tabs here to add more interaction)
+# Map and sector breakdown
 with col[1]:
     st.markdown('#### 📍 Map of France with Emissions by Department')
     
@@ -283,18 +306,22 @@ with col[1]:
         data_by_sector = data_merged[['Agriculture', 'Autres transports', 'Déchets', 'Energie', 'Industrie hors-énergie', 'Résidentiel', 'Routier', 'Tertiaire']].sum().reset_index()
         data_by_sector['index'] = ['Agriculture', 'Other transports', 'Waste', 'Energy', 'Industry excluding energy', 'Residential', 'Road', 'Tertiary']
         data_by_sector.columns = ['Secteur', 'Emissions']
+
+        # Convert emissions based on the selected unit
+        data_by_sector['Emissions_converted'] = data_by_sector['Emissions'] * unit_factor
+
         fig_bar = px.bar(
             data_by_sector, 
             x='Secteur', 
-            y='Emissions', 
-            labels={'Emissions': 'Tonne of CO₂eq', 'Secteur': 'Sector'}, 
-            color='Emissions', 
+            y='Emissions_converted', 
+            labels={'Emissions_converted': f'{selected_unit}', 'Secteur': 'Sector'}, 
+            color='Emissions_converted', 
             color_continuous_scale='RdYlGn_r'
         )
         fig_bar.update_layout(showlegend=False, margin=dict(t=30, b=30, l=0, r=0), height=400)
         st.plotly_chart(fig_bar, use_container_width=True)
 
-# TOP COMMUNES section (Show all communes)
+# Top Communes section
 with col[2]:
     st.markdown('#### 🥇 Top Communes')
     st.write("")
