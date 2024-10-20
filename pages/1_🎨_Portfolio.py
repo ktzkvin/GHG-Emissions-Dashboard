@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import pydeck as pdk
 
 # Page configuration
 st.set_page_config(page_title="Kevin Kurtz Portfolio", layout="wide", page_icon=":bar_chart:")
@@ -131,6 +132,68 @@ with col8:
         """,
         unsafe_allow_html=True
     )
+
+# Horizontal separator
+st.markdown("<hr>", unsafe_allow_html=True)
+
+# Education Locations Section
+st.header("🎓 Education Locations")
+
+st.write("The maps below show the locations where I pursued my education: **EFREI Paris, France** and an **Exchange Program at Asia Pacific University, Kuala Lumpur, Malaysia**.")
+
+# Data for the locations
+paris_coords = pd.DataFrame({'lat': [48.8566], 'lon': [2.3522]})
+kuala_lumpur_coords = pd.DataFrame({'lat': [3.1390], 'lon': [101.6869]})
+
+# Setting up the map views
+paris_view = pdk.ViewState(
+    latitude=46.603354,
+    longitude=2.3522,
+    zoom=4,
+)
+
+kuala_lumpur_view = pdk.ViewState(
+    latitude=3.1390,
+    longitude=101.6869,
+    zoom=5,
+)
+
+# Layers for the markers
+paris_layer = pdk.Layer(
+    "ScatterplotLayer",
+    data=paris_coords,
+    get_position='[lon, lat]',
+    get_radius=5000,
+    get_color=[255, 0, 0, 200],
+    pickable=True
+)
+
+kuala_lumpur_layer = pdk.Layer(
+    "ScatterplotLayer",
+    data=kuala_lumpur_coords,
+    get_position='[lon, lat]',
+    get_radius=5000,
+    get_color=[0, 0, 255, 200],
+    pickable=True
+)
+
+# Displaying the maps side by side
+col1, col2 = st.columns(2)
+with col1:
+    st.pydeck_chart(pdk.Deck(
+        map_style="mapbox://styles/mapbox/streets-v11",  # Style de carte coloré
+        initial_view_state=paris_view,
+        layers=[paris_layer],
+    ))
+    st.subheader("Paris, France (EFREI)")
+
+with col2:
+    st.pydeck_chart(pdk.Deck(
+        map_style="mapbox://styles/mapbox/streets-v11",  # Style de carte coloré
+        initial_view_state=kuala_lumpur_view,
+        layers=[kuala_lumpur_layer],
+    ))
+    st.subheader("Kuala Lumpur, Malaysia (Exchange Program)")
 
 # Horizontal separator
 st.markdown("<hr>", unsafe_allow_html=True)
