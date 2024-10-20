@@ -35,7 +35,7 @@ if 'dialog_shown_once' not in st.session_state:
 # --------------------------- Popup Window ------------------------------ #
 @st.dialog("Welcome to the GHG Emissions Dashboard 🏭", width="large")
 def welcome_dialog():
-    st.markdown("This dashboard provides an interactive view of **Greenhouse Gas Emissions** data in France by Communes in 2016 (data from data.gouv.fr).")
+    st.markdown("This dashboard provides an interactive view of **Greenhouse Gas Emissions** data in France by Communes in 2016 (data from [Data Gouv](https://www.data.gouv.fr/fr/datasets/inventaire-de-gaz-a-effet-de-serre-territorialise/)).")
     st.markdown("Explore emissions by sectors, compare the 🌟 most and ❌ least polluting areas but also how CO₂ emissions are distributed across the country.")
     st.image("screenshots/ghg_illustration.jpg")
 
