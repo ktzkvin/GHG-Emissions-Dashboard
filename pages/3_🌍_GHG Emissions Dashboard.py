@@ -330,7 +330,7 @@ st.markdown("### Compare Departments")
 selected_departments = st.multiselect(
     "Select two departments to compare their emissions",
     options=data_merged['Département'].unique(),
-    default=['Paris', 'Rhône']
+    default=['Paris', 'Rhône', 'Bouches-du-Rhône', 'Gironde', 'Hérault']
 )
 
 comparison_data = data_merged[data_merged['Département'].isin(selected_departments)]

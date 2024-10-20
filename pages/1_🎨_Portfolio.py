@@ -1,158 +1,148 @@
-"""
-**@author : Kevin KURTZ**
-**@contact : contact@kevin-kurtz.fr**
-"""
-
-# --------------------------- Import libraries --------------------------- #
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# --------------------------- Page Configuration ---------------------------- #
-st.set_page_config(page_title="Portfolio - Kevin Kurtz", page_icon="🎓", layout="wide")
+# Page configuration
+st.set_page_config(page_title="Kevin Kurtz Portfolio", layout="wide", page_icon=":bar_chart:")
 
-# --------------------------- Sidebar Contact ---------------------------- #
-with st.sidebar:
-    st.header("Contact Information")
-    st.markdown("""
-    - 📧 **Email**: [contact@kevin-kurtz.fr](mailto:contact@kevin-kurtz.fr)
-    - 🌐 **LinkedIn**: [Kevin Kurtz](https://www.linkedin.com/in/kevin-kurtz/)
-    - 💻 **GitHub**: [ktzkvin](https://github.com/ktzkvin)
-    """)
-    st.markdown("---")
-    st.write("This portfolio showcases my skills, projects, and professional experiences.")
+# Sidebar
+st.sidebar.markdown("[LinkedIn](https://www.linkedin.com/in/kevin-kurtz/)")
+st.sidebar.markdown("[GitHub](https://github.com/ktzkvin)")
 
-# --------------------------- Introduction ------------------------------- #
-st.title("🎓 Kevin Kurtz's Portfolio")
-st.markdown("""
-I am a Master's student in **Data and AI** at EFREI Paris, passionate about **Data Science**, 
-**Machine Learning**, and **Artificial Intelligence**. Below, you'll find an interactive overview of my skills, projects, and experiences.
+# Header
+st.title("Kevin Kurtz")
+st.subheader("Data Scientist &nbsp;-&nbsp; M1 Data & AI Student at EFREI Paris")
+
+# General profile
+st.write("""
+    Data & AI master's student at EFREI Paris, passionate about data science and artificial intelligence.
+    My skills cover programming, data analysis and machine learning model development.
 """)
 
-# ---------------------- Spider Chart of Skills -------------------------- #
-st.header("Technical Skills")
+# Horizontal separator
+st.markdown("<hr>", unsafe_allow_html=True)
 
-# Data for the spider chart (replace with your actual skill data)
-skills = {
-    'Skills': ['Python', 'Git', 'SQL', 'Pandas', 'TensorFlow', 'Matplotlib', 'Power BI', 'Scikit-learn'],
-    'Proficiency': [8, 7, 6, 8, 7, 7, 5, 6]
-}
+# Technical and Soft Skills side by side
+st.header("💡 Skills Overview")
+col1, col2 = st.columns(2)
 
-df_skills = pd.DataFrame(skills)
-
-# Create the spider chart using Plotly
-fig = px.line_polar(df_skills, r='Proficiency', theta='Skills', line_close=True, 
-                    title="Kevin's Technical Skills", range_r=[0, 10], template="plotly_dark")
-
-fig.update_traces(fill='toself')
-
-# Display the chart
-st.plotly_chart(fig)
-
-# --------------------- Horizontal Timeline for Experience ---------------- #
-st.header("Professional Experience")
-
-# HTML and CSS for the horizontal timeline
-timeline_html = """
-<div class="timeline-container">
-    <div class="timeline-item">
-        <div class="timeline-date">Jan 2023 - Feb 2023</div>
-        <div class="timeline-content">
-            <h3>Data Science Intern</h3>
-            <p>Darty Nation - Assisted clients and optimized their shopping experience through data analysis.</p>
-        </div>
-    </div>
-    <div class="timeline-item">
-        <div class="timeline-date">Nov 2021 - Present</div>
-        <div class="timeline-content">
-            <h3>Student Assistant</h3>
-            <p>Restaurant l’Inattendu - Provided support in kitchen and service, contributing to the overall customer experience.</p>
-        </div>
-    </div>
-    <!-- Add more timeline items here -->
-</div>
-"""
-
-# CSS for styling the horizontal timeline
-timeline_css = """
-<style>
-.timeline-container {
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 20px;
-}
-.timeline-item {
-    display: inline-block;
-    background: #1f1f1f;
-    color: white;
-    border-radius: 10px;
-    padding: 20px;
-    margin-right: 20px;
-    min-width: 250px;
-    max-width: 300px;
-}
-.timeline-date {
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.timeline-content h3 {
-    margin: 0;
-    font-size: 1.2em;
-}
-.timeline-content p {
-    margin-top: 10px;
-    font-size: 0.9em;
-    color: #aaa;
-}
-</style>
-"""
-
-# Display the timeline in Streamlit
-st.markdown(timeline_css, unsafe_allow_html=True)
-st.markdown(timeline_html, unsafe_allow_html=True)
-
-# ------------------------ Project Cards ------------------------------- #
-st.header("Projects")
-
-# Project data (replace with your actual projects)
-projects = [
-    {
-        "title": "Machine Learning Dashboard",
-        "description": "An interactive dashboard showcasing various machine learning models and their performance on different datasets.",
-        "tech_stack": "Python, Streamlit, Scikit-learn, Plotly",
-        "link": "https://github.com/ktzkvin/ml-dashboard"
-    },
-    {
-        "title": "Data Visualization with Plotly",
-        "description": "A project focused on creating engaging data visualizations using Plotly and Streamlit for a smooth user experience.",
-        "tech_stack": "Python, Plotly, Streamlit",
-        "link": "https://github.com/ktzkvin/data-viz-plotly"
-    },
-    {
-        "title": "NLP Sentiment Analysis",
-        "description": "Natural language processing project analyzing sentiments from large datasets using machine learning algorithms.",
-        "tech_stack": "Python, NLTK, Scikit-learn",
-        "link": "https://github.com/ktzkvin/nlp-sentiment-analysis"
+# Hard Skills
+with col1:
+    st.subheader("Hard Skills")
+    hard_skills = {
+        'Skills': ['Python', 'Git', 'SQL', 'Pandas', 'TensorFlow', 'Matplotlib', 'Power BI', 'Scikit-learn'],
+        'Proficiency': [8, 8, 5, 8, 7, 9, 6, 7]
     }
-]
+    df_hard_skills = pd.DataFrame(hard_skills)
+    fig_hard_skills = px.line_polar(df_hard_skills, r='Proficiency', theta='Skills', line_close=True, 
+                                    range_r=[0, 10], template="plotly_dark")
+    fig_hard_skills.update_traces(fill='toself', fillcolor='rgba(0, 102, 255, 0.5)', line_color='rgba(0, 102, 255, 1)')
+    st.plotly_chart(fig_hard_skills, use_container_width=True)
 
-# Display project cards in 3 columns
-col1, col2, col3 = st.columns(3)
+# Soft Skills
+with col2:
+    st.subheader("Soft Skills")
+    soft_skills = {
+        'Skills': ['Communication', 'Teamwork', 'Adaptability', 'Problem Solving', 'Creativity', 'Time Management'],
+        'Proficiency': [7, 7, 8, 7, 9, 8]
+    }
+    df_soft_skills = pd.DataFrame(soft_skills)
+    fig_soft_skills = px.line_polar(df_soft_skills, r='Proficiency', theta='Skills', line_close=True, 
+                                    range_r=[0, 10], template="plotly_dark")
+    fig_soft_skills.update_traces(fill='toself', fillcolor='rgba(0, 204, 102, 0.5)', line_color='rgba(0, 204, 102, 1)')
+    st.plotly_chart(fig_soft_skills, use_container_width=True)
 
-for index, project in enumerate(projects):
-    if index % 3 == 0:
-        with col1:
-            st.markdown(f"### [{project['title']}]({project['link']})")
-            st.write(project['description'])
-            st.write(f"**Tech Stack**: {project['tech_stack']}")
-    elif index % 3 == 1:
-        with col2:
-            st.markdown(f"### [{project['title']}]({project['link']})")
-            st.write(project['description'])
-            st.write(f"**Tech Stack**: {project['tech_stack']}")
-    else:
-        with col3:
-            st.markdown(f"### [{project['title']}]({project['link']})")
-            st.write(project['description'])
-            st.write(f"**Tech Stack**: {project['tech_stack']}")
+# Horizontal separator
+st.markdown("<hr>", unsafe_allow_html=True)
+
+# Academic Projects
+st.header("📚 Academic Projects")
+
+# Project 1
+col3, col4 = st.columns([1, 3])
+with col3:
+    st.image("screenshots/Bougeons_Malin.jpg", use_column_width=True)
+with col4:
+    st.subheader("🚇 Bougeons Malin - Public Transport Optimization")
+    st.write("""
+        Development of a neural network algorithm to optimize the distribution of passengers in Paris public transport.  
+        Technologies: TensorFlow, Python
+    """)
+    st.markdown(
+        """
+        <a href="https://github.com/ktzkvin/SMART" target="_blank">
+            <button style="background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; 
+            text-decoration: none; display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer;">
+                View on GitHub
+            </button>
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
+
+st.write("")
+st.write("")
+st.write("")
+
+# Project 2
+col5, col6 = st.columns([1, 3])
+with col5:
+    st.image("screenshots/DVF.jpg", use_column_width=True)
+with col6:
+    st.subheader("🏠 DVF Data Analysis - Real Estate Price Modeling")
+    st.write("""
+        Modeling and predicting real estate prices in France, analyzing market trends over several years using Pandas and Matplotlib.  
+        Technologies: Pandas, Matplotlib
+    """)
+    st.markdown(
+        """
+        <a href="https://github.com/ktzkvin/Mastercamp-DVF" target="_blank">
+            <button style="background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; 
+            text-decoration: none; display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer;">
+                View on GitHub
+            </button>
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
+
+st.write("")
+st.write("")
+st.write("")
+
+# Project 3
+col7, col8 = st.columns([1, 3])
+with col7:
+    st.image("screenshots/Explain.jpg", use_column_width=True)
+with col8:
+    st.subheader("📜 EXPLAIN - Patent Classification System")
+    st.write("""
+        Development of an automatic patent classification system using Scikit-Learn.  
+        Technologies: Scikit-Learn, Python
+    """)
+    st.markdown(
+        """
+        <a href="https://github.com/ktzkvin/Mastercamp-EXPLAIN" target="_blank">
+            <button style="background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; 
+            text-decoration: none; display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer;">
+                View on GitHub
+            </button>
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Horizontal separator
+st.markdown("<hr>", unsafe_allow_html=True)
+
+# Contact Section
+st.header("📞 Contact")
+st.write("📧 contact@kevin-kurtz.fr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 📞 +33 6 62 75 72 77 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 📍 Paris, France")
+
+# Contact Form
+st.subheader("Contact Form")
+name = st.text_input("Name")
+email = st.text_input("Email")
+message = st.text_area("Message")
+if st.button("Send"):
+    st.write("Thank you for your message, I will get back to you soon.")
