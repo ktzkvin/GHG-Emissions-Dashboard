@@ -383,7 +383,10 @@ with col[1]:
 
     # Top 3 most polluting departments
     with tabs[2]:
-        st.markdown('#### 🕸️ Sector Breakdown: Top 3 Most Polluting Departments')
+        st.markdown('#### 🕸️ Sector Breakdown: Top 3 most polluting departments')
+        st.write("")
+        st.write("")
+        st.write("")
 
         top_3_departements = data_merged.groupby('Département').agg({'Total': 'sum'}).reset_index().nlargest(3, 'Total')
         top_3_departements_list = top_3_departements['Département'].tolist()
@@ -420,7 +423,6 @@ with col[1]:
             color='Département',
             line_close=True,
             template="plotly_dark",
-            title="Emissions Breakdown by Sector for Top 3 Departments"
         )
 
         fig_spider.update_traces(fill='toself', mode='lines+markers')
@@ -468,13 +470,24 @@ with col[2]:
         - Note: The data is from **2016** and may change in future years.
         ''')
 
+# Comparison section
 st.markdown("### Compare Departments")
-selected_departments = st.multiselect(
-    "Select two departments to compare their emissions",
-    options=data_merged['Département'].unique(),
-    default=['Paris', 'Rhône', 'Bouches-du-Rhône', 'Gironde', 'Hérault']
+selected_departments = st.multiselect("Select departments to compare their emissions", options=data_merged['Département'].unique(), default=['Paris', 'Rhône', 'Bouches-du-Rhône'])
+comparison_data = data_merged[data_merged['Département'].isin(selected_departments)].groupby('Département', as_index=False).agg({'Total': 'sum'})
+
+fig_comparison = px.bar(
+    comparison_data, 
+    x='Département', 
+    y='Total', 
+    color='Département', 
+    title="GHG Emissions Comparison",
+    labels={'Total': 'Total Emissions (Tonne of CO₂eq)'}
 )
 
-comparison_data = data_merged[data_merged['Département'].isin(selected_departments)]
-fig_comparison = px.bar(comparison_data, x='Département', y='Total', color='Département', title="GHG Emissions Comparison")
+fig_comparison.update_layout(
+    showlegend=False,
+    margin=dict(t=40, b=40, l=0, r=0),
+    height=400
+)
+
 st.plotly_chart(fig_comparison, use_container_width=True)
