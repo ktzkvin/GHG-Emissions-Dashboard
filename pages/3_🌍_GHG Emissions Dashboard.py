@@ -35,7 +35,7 @@ if 'dialog_step' not in st.session_state:
 # --------------------------- Popup Window ------------------------------ #
 @st.dialog("Welcome to the GHG Emissions Dashboard 🏭", width="large")
 def welcome_dialog():
-    # Step 1 - Introduction générale avec animation lettre par lettre
+    # Step 1 - Introduction to the dashboard and GHG emissions 
     if st.session_state.dialog_step == 1:
         def stream_step_1_letter_by_letter():
             text = (
@@ -47,22 +47,22 @@ def welcome_dialog():
 
             for char in text:
                 yield char
-                time.sleep(0.005)  # Délai pour animation plus rapide
+                time.sleep(0.005)
 
-        # Passer la fonction générateur à st.write_stream pour créer l'animation
+        # Animation
         st.write_stream(stream_step_1_letter_by_letter)
 
-        # Afficher l'image après l'animation du texte
         st.image("screenshots/ghg_illustration.jpg")
 
-    # Step 2 - Affichage des données sous forme de tableau scrollable
+    # Step 2 - Introduction to the emissions data
     elif st.session_state.dialog_step == 2:
         def stream_step_2_letter_by_letter():
             text = (
-                "### Les Émissions de CO₂ en France par Commune - Données 2016\n"
-                "Ci-dessous, un aperçu des émissions de gaz à effet de serre par commune en France. "
-                "Les données proviennent de **Data Gouv** et montrent les émissions en tonnes de CO₂ équivalent (CO₂eq) "
-                "pour chaque secteur.\n\n"
+                "### Understanding the Data\n"
+                "The data includes emissions from various sectors such as **Agriculture**, **Transport**, **Industry**, **Residential**, "
+                "**Energy**, **Waste**, and more. Each commune's emissions are measured in **Tonne of CO₂eq**.\n\n"
+                "The dashboard also provides a comparison of emissions between different departments and communes. "
+                "Let's dive into the details and explore the data together! 🌍\n"
             )
 
             for char in text:
