@@ -36,7 +36,7 @@ if 'dialog_step' not in st.session_state:
 def welcome_dialog():
     # Step 1 - Introduction to the dashboard and GHG emissions 
     if st.session_state.dialog_step == 1:
-        def stream_step_1_letter_by_letter():
+        def step_1():
             text = (
                 "This dashboard provides an interactive view of **Greenhouse Gas Emissions** data in France by Communes in 2016 "
                 "(data from [Data Gouv](https://www.data.gouv.fr/fr/datasets/inventaire-de-gaz-a-effet-de-serre-territorialise/)).\n\n"
@@ -49,13 +49,13 @@ def welcome_dialog():
                 time.sleep(0.005)
 
         # Animation
-        st.write_stream(stream_step_1_letter_by_letter)
+        st.write_stream(step_1)
 
         st.image("screenshots/ghg_illustration.jpg")
 
     # Step 2 - Introduction to the emissions data
     elif st.session_state.dialog_step == 2:
-        def stream_step_2_letter_by_letter():
+        def step_2():
             text = (
                 "### Understanding the Data\n"
                 "The data includes emissions from various sectors such as **Agriculture**, **Transport**, **Industry**, **Residential**, "
@@ -68,7 +68,7 @@ def welcome_dialog():
                 time.sleep(0.005)
 
         # Animation
-        st.write_stream(stream_step_2_letter_by_letter)
+        st.write_stream(step_2)
         time.sleep(0.5)
 
         data_emissions
@@ -298,7 +298,7 @@ st.markdown('---')
 # 3 Columns as before
 col = st.columns((1.8, 4.2, 2), gap='medium')
 
-# TOP 10 and WORST DEPARTMENTS as before, with unified titles and opened expanders
+# TOP 10 Most and Least polluting Departments
 with col[0]:
     with st.expander('🏆 Top 10 Polluting Departments', expanded=True):
         data_by_departement = data_merged.groupby('Département').agg({'Total': 'sum'}).reset_index()
@@ -336,18 +336,18 @@ with col[1]:
     st.markdown('#### 📍 Map of France with Emissions by Department')
     
     # Use Tabs to switch between Map and Breakdown
-    tabs = st.tabs(["France Map", "Sector Breakdown"])
+    tabs = st.tabs(["France Map", "Sector Breakdown","Top 3 Emitters"])
 
+    # Map of France with emissions by department
     with tabs[0]:
         st.markdown('#### 📍 Map of France with Emissions by Department')
         france_heatmap()
         with st.popover("ℹ️ - What this map shows"):
-            st.markdown(
-                "This map illustrates greenhouse gas emissions by department. "
+            st.markdown("This map illustrates greenhouse gas emissions by department. "
                 "The color intensity reflects the total CO₂ emissions, with darker shades indicating higher emissions. "
             )
 
-
+    # Sector breakdown
     with tabs[1]:
         st.markdown('#### 📊 Emissions by Sector')
         data_by_sector = data_merged[['Agriculture', 'Autres transports', 'Déchets', 'Energie', 'Industrie hors-énergie', 'Résidentiel', 'Routier', 'Tertiaire']].sum().reset_index()
@@ -367,6 +367,74 @@ with col[1]:
         )
         fig_bar.update_layout(showlegend=False, margin=dict(t=30, b=30, l=0, r=0), height=400)
         st.plotly_chart(fig_bar, use_container_width=True)
+
+
+    # Dictionary mapping French sector names to English
+    sector_translation = {
+        'Agriculture': 'Agriculture',
+        'Autres transports': 'Other transports',
+        'Déchets': 'Waste',
+        'Energie': 'Energy',
+        'Industrie hors-énergie': 'Industry excluding energy',
+        'Résidentiel': 'Residential',
+        'Routier': 'Road',
+        'Tertiaire': 'Tertiary'
+    }
+
+    # Top 3 most polluting departments
+    with tabs[2]:
+        st.markdown('#### 🕸️ Sector Breakdown: Top 3 Most Polluting Departments')
+
+        top_3_departements = data_merged.groupby('Département').agg({'Total': 'sum'}).reset_index().nlargest(3, 'Total')
+        top_3_departements_list = top_3_departements['Département'].tolist()
+
+        # Original French sector names from the dataset
+        french_sectors = ['Agriculture', 'Autres transports', 'Déchets', 'Energie', 
+                        'Industrie hors-énergie', 'Résidentiel', 'Routier', 'Tertiaire']
+
+        # Translate French sectors to English for display purposes
+        english_sectors = [sector_translation[sector] for sector in french_sectors]
+
+        spider_data = []
+
+        for dep in top_3_departements_list:
+            dep_data = data_merged[data_merged['Département'] == dep]
+            sector_totals = dep_data[french_sectors].sum().tolist()
+            
+            spider_data.append({
+                'Département': dep,
+                'Emissions': [val * unit_factor for val in sector_totals],
+                'Sector': english_sectors 
+            })
+
+        # Create a DataFrame for the spider chart
+        spider_df = pd.concat(
+            [pd.DataFrame({'Département': data['Département'], 'Emissions': data['Emissions'], 'Sector': data['Sector']})
+            for data in spider_data], ignore_index=True)
+
+        # Spider Chart
+        fig_spider = px.line_polar(
+            spider_df,
+            r='Emissions',
+            theta='Sector',
+            color='Département',
+            line_close=True,
+            template="plotly_dark",
+            title="Emissions Breakdown by Sector for Top 3 Departments"
+        )
+
+        fig_spider.update_traces(fill='toself', mode='lines+markers')
+        fig_spider.update_layout(
+            polar=dict(
+                radialaxis=dict(visible=True, range=[0, spider_df['Emissions'].max()])
+            ),
+            showlegend=True,
+            margin=dict(t=30, b=30, l=0, r=0),
+            height=400
+        )
+
+        st.plotly_chart(fig_spider, use_container_width=True)
+
 
 # Top Communes section
 with col[2]:
@@ -394,7 +462,7 @@ with col[2]:
     )
 
     # Add Expander with extra analysis details
-    with st.expander('🔍 Explore More Details', expanded=False):
+    with st.expander('🔍 Explore more Details', expanded=False):
         st.write('''
         - Data source: [Inventaire de gaz a effet de serre territorialisé](https://www.data.gouv.fr/fr/datasets/inventaire-de-gaz-a-effet-de-serre-territorialise/)  (Data Gouv)
         - Note: The data is from **2016** and may change in future years.
