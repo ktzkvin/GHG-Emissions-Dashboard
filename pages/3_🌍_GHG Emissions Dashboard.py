@@ -8,9 +8,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import requests
-import io
-import zipfile
-
+import time
 
 # ------------------------------ Load data ------------------------------ #
 data_emissions = pd.read_csv('csv-data/emissions_ges_france.csv')
@@ -25,27 +23,92 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ----------------------- State to manage popup ------------------------- #
+# ----------------------- Initialize Session State ---------------------- #
+# Initialiser toutes les variables nécessaires dans st.session_state
 if 'show_dialog' not in st.session_state:
     st.session_state.show_dialog = True
 if 'dialog_shown_once' not in st.session_state:
     st.session_state.dialog_shown_once = False
-
+if 'dialog_step' not in st.session_state:
+    st.session_state.dialog_step = 1
 
 # --------------------------- Popup Window ------------------------------ #
 @st.dialog("Welcome to the GHG Emissions Dashboard 🏭", width="large")
 def welcome_dialog():
-    st.markdown("This dashboard provides an interactive view of **Greenhouse Gas Emissions** data in France by Communes in 2016 (data from [Data Gouv](https://www.data.gouv.fr/fr/datasets/inventaire-de-gaz-a-effet-de-serre-territorialise/)).")
-    st.markdown("Explore emissions by sectors, compare the 🌟 most and ❌ least polluting areas but also how CO₂ emissions are distributed across the country.")
-    st.image("screenshots/ghg_illustration.jpg")
+    # Step 1 - Introduction générale avec animation lettre par lettre
+    if st.session_state.dialog_step == 1:
+        def stream_step_1_letter_by_letter():
+            text = (
+                "This dashboard provides an interactive view of **Greenhouse Gas Emissions** data in France by Communes in 2016 "
+                "(data from [Data Gouv](https://www.data.gouv.fr/fr/datasets/inventaire-de-gaz-a-effet-de-serre-territorialise/)).\n\n"
+                "Explore emissions by sectors, compare the **❌ most** and **👑 least** polluting areas but also how CO₂ emissions are "
+                "distributed across the country.\n"
+            )
+
+            for char in text:
+                yield char
+                time.sleep(0.005)  # Délai pour animation plus rapide
+
+        # Passer la fonction générateur à st.write_stream pour créer l'animation
+        st.write_stream(stream_step_1_letter_by_letter)
+
+        # Afficher l'image après l'animation du texte
+        st.image("screenshots/ghg_illustration.jpg")
+
+    # Step 2 - Affichage des données sous forme de tableau scrollable
+    elif st.session_state.dialog_step == 2:
+        def stream_step_2_letter_by_letter():
+            text = (
+                "### Les Émissions de CO₂ en France par Commune - Données 2016\n"
+                "Ci-dessous, un aperçu des émissions de gaz à effet de serre par commune en France. "
+                "Les données proviennent de **Data Gouv** et montrent les émissions en tonnes de CO₂ équivalent (CO₂eq) "
+                "pour chaque secteur.\n\n"
+            )
+
+            for char in text:
+                yield char
+                time.sleep(0.005)  # Animation rapide pour le texte
+
+        # Afficher le texte d'introduction avec l'animation
+        st.write_stream(stream_step_2_letter_by_letter)
+
+        # Pause légère avant d'afficher le tableau (pour un effet dramatique)
+        time.sleep(0.5)
+
+        data_emissions
+
+    # Step 3 - Prêt pour l'exploration complète avec animation lettre par lettre
+    elif st.session_state.dialog_step == 3:
+        def stream_step_3_letter_by_letter():
+            text = (
+                "### Prêt à explorer les détails ?\n"
+                "Vous avez maintenant une bonne compréhension des sources des émissions de GES en France. 🎯 "
+                "C'est le moment de plonger dans les détails des différents départements et communes. "
+                "Vous pourrez voir quelles régions émettent le plus de CO₂, quelles sont les moins polluantes, "
+                "et même comparer les émissions entre plusieurs départements. "
+                "Utilisez les cartes, graphiques, et données disponibles pour découvrir des faits surprenants ! 🌍\n"
+            )
+
+            for char in text:
+                yield char
+                time.sleep(0.005)  # Animation rapide pour le texte
+
+        # Passer la fonction générateur à st.write_stream
+        st.write_stream(stream_step_3_letter_by_letter)
+
+    # Bouton pour avancer dans le story-telling
+    col1, col2 = st.columns([8, 1])
+    with col2:
+        if st.session_state.dialog_step < 3:
+            st.button("✅", on_click=lambda: st.session_state.update(dialog_step=st.session_state.dialog_step + 1))
+
 
 def close_dialog():
     st.session_state.show_dialog = False
 
-# Appel de la fonction de la boîte de dialogue
+# Vérifier si la fenêtre de dialogue doit être affichée
 if st.session_state.show_dialog and not st.session_state.dialog_shown_once:
     welcome_dialog()
-    st.button("Close", on_click=close_dialog)
     st.session_state.dialog_shown_once = True
 
 
@@ -299,7 +362,14 @@ with col[1]:
     tabs = st.tabs(["France Map", "Sector Breakdown"])
 
     with tabs[0]:
+        st.markdown('#### 📍 Map of France with Emissions by Department')
         france_heatmap()
+        with st.popover("ℹ️ - What this map shows"):
+            st.markdown(
+                "This map illustrates greenhouse gas emissions by department. "
+                "The color intensity reflects the total CO₂ emissions, with darker shades indicating higher emissions. "
+            )
+
 
     with tabs[1]:
         st.markdown('#### 📊 Emissions by Sector')
