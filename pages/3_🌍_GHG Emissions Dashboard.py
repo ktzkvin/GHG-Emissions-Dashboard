@@ -24,7 +24,6 @@ st.set_page_config(
 )
 
 # ----------------------- Initialize Session State ---------------------- #
-# Initialiser toutes les variables nécessaires dans st.session_state
 if 'show_dialog' not in st.session_state:
     st.session_state.show_dialog = True
 if 'dialog_shown_once' not in st.session_state:
@@ -61,52 +60,30 @@ def welcome_dialog():
                 "### Understanding the Data\n"
                 "The data includes emissions from various sectors such as **Agriculture**, **Transport**, **Industry**, **Residential**, "
                 "**Energy**, **Waste**, and more. Each commune's emissions are measured in **Tonne of CO₂eq**.\n\n"
-                "The dashboard also provides a comparison of emissions between different departments and communes. "
                 "Let's dive into the details and explore the data together! 🌍\n"
             )
 
             for char in text:
                 yield char
-                time.sleep(0.005)  # Animation rapide pour le texte
+                time.sleep(0.005)
 
-        # Afficher le texte d'introduction avec l'animation
+        # Animation
         st.write_stream(stream_step_2_letter_by_letter)
-
-        # Pause légère avant d'afficher le tableau (pour un effet dramatique)
         time.sleep(0.5)
 
         data_emissions
 
-    # Step 3 - Prêt pour l'exploration complète avec animation lettre par lettre
-    elif st.session_state.dialog_step == 3:
-        def stream_step_3_letter_by_letter():
-            text = (
-                "### Prêt à explorer les détails ?\n"
-                "Vous avez maintenant une bonne compréhension des sources des émissions de GES en France. 🎯 "
-                "C'est le moment de plonger dans les détails des différents départements et communes. "
-                "Vous pourrez voir quelles régions émettent le plus de CO₂, quelles sont les moins polluantes, "
-                "et même comparer les émissions entre plusieurs départements. "
-                "Utilisez les cartes, graphiques, et données disponibles pour découvrir des faits surprenants ! 🌍\n"
-            )
-
-            for char in text:
-                yield char
-                time.sleep(0.005)  # Animation rapide pour le texte
-
-        # Passer la fonction générateur à st.write_stream
-        st.write_stream(stream_step_3_letter_by_letter)
-
-    # Bouton pour avancer dans le story-telling
+    # Next step button
     col1, col2 = st.columns([8, 1])
     with col2:
-        if st.session_state.dialog_step < 3:
+        if st.session_state.dialog_step < 2:
             st.button("✅", on_click=lambda: st.session_state.update(dialog_step=st.session_state.dialog_step + 1))
 
-
+#
 def close_dialog():
     st.session_state.show_dialog = False
 
-# Vérifier si la fenêtre de dialogue doit être affichée
+# Show the dialog only once
 if st.session_state.show_dialog and not st.session_state.dialog_shown_once:
     welcome_dialog()
     st.session_state.dialog_shown_once = True

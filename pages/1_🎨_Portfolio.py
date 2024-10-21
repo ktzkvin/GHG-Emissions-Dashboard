@@ -7,8 +7,12 @@ import pydeck as pdk
 st.set_page_config(page_title="Kevin Kurtz Portfolio", layout="wide", page_icon=":bar_chart:")
 
 # Sidebar
-st.sidebar.markdown("[LinkedIn](https://www.linkedin.com/in/kevin-kurtz/)")
-st.sidebar.markdown("[GitHub](https://github.com/ktzkvin)")
+with st.sidebar:
+    st.markdown("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>", unsafe_allow_html=True)
+    st.markdown("## Keep in Touch")
+    st.markdown("📧 [Email me](mailto:contact@kevin-kurtz.fr)")
+    st.markdown("💻 [GitHub](https://github.com/ktzkvin)")
+
 
 # Header
 st.title("Kevin Kurtz")
