@@ -404,11 +404,7 @@ with col[1]:
             dep_data = data_merged[data_merged['Département'] == dep]
             sector_totals = dep_data[french_sectors].sum().tolist()
             
-            spider_data.append({
-                'Département': dep,
-                'Emissions': [val * unit_factor for val in sector_totals],
-                'Sector': english_sectors 
-            })
+            spider_data.append({'Département': dep, 'Emissions': [val * unit_factor for val in sector_totals], 'Sector': english_sectors})
 
         # Create a DataFrame for the spider chart
         spider_df = pd.concat(
