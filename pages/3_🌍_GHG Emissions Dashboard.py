@@ -333,7 +333,7 @@ with col[0]:
 
 # Map and sector breakdown
 with col[1]:
-    st.markdown('####🌍 Emissions and breakdown analysis')
+    st.markdown('#### 🌍 Emissions and breakdown analysis')
     
     # Use Tabs to switch between Map and Brakdown
     tabs = st.tabs(["France Map", "Sector Breakdown","Top 3 Emitters"])
