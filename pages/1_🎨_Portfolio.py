@@ -204,7 +204,7 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # Contact Section
 st.header("📞 Contact")
-st.write("📧 contact@kevin-kurtz.fr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 📞 +33 6 62 75 72 77 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 📍 Paris, France")
+st.write("📧 contact@kevin-kurtz.fr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 📍 Paris, France")
 
 # Contact Form
 st.subheader("Contact Form")
