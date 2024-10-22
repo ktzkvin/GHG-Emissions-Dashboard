@@ -300,14 +300,14 @@ col = st.columns((1.8, 4.2, 2), gap='medium')
 
 # TOP 10 Most and Least polluting Departments
 with col[0]:
-    with st.expander('🏆 Top 10 Polluting Departments', expanded=True):
+    with st.expander('🏆 Top 10 polluting departments', expanded=True):
         data_by_departement = data_merged.groupby('Département').agg({'Total': 'sum'}).reset_index()
         top_departements = data_by_departement.nlargest(9, 'Total')
         fig_top_pie = px.pie(
             top_departements, 
             names='Département', 
             values='Total', 
-            title='Top 10 Most Polluting Departments',
+            title='Top 10 most polluting departments',
             labels={'Département': '', 'Total': ''},  
             color_discrete_sequence=px.colors.sequential.Reds_r
         )
@@ -317,13 +317,13 @@ with col[0]:
     
     st.markdown('---')
     
-    with st.expander('🌍 Top 10 Least Polluting Departments', expanded=True):
+    with st.expander('🌍 Top 10 least polluting departments', expanded=True):
         bottom_departements = data_by_departement.nsmallest(9, 'Total')
         fig_bottom_pie = px.pie(
             bottom_departements, 
             names='Département', 
             values='Total', 
-            title='Top 10 Least Polluting Departments',
+            title='Top 10 least polluting departments',
             labels={'Département': '', 'Total': ''},  
             color_discrete_sequence=px.colors.sequential.YlGn
         )
