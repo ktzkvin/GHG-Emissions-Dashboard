@@ -333,14 +333,14 @@ with col[0]:
 
 # Map and sector breakdown
 with col[1]:
-    st.markdown('#### 📍 Map of France with Emissions by Department')
+    st.markdown('#### 📍 🌍 Emissions and breakdown analysis')
     
     # Use Tabs to switch between Map and Breakdown
     tabs = st.tabs(["France Map", "Sector Breakdown","Top 3 Emitters"])
 
     # Map of France with emissions by department
     with tabs[0]:
-        st.markdown('#### 📍 Map of France with Emissions by Department')
+        st.markdown('#### 📍 Map of France with emissions by department')
         france_heatmap()
         with st.popover("ℹ️ - What this map shows"):
             st.markdown("This map illustrates greenhouse gas emissions by department. "
@@ -349,7 +349,7 @@ with col[1]:
 
     # Sector breakdown
     with tabs[1]:
-        st.markdown('#### 📊 Emissions by Sector')
+        st.markdown('#### 📊 Emissions by sector')
         data_by_sector = data_merged[['Agriculture', 'Autres transports', 'Déchets', 'Energie', 'Industrie hors-énergie', 'Résidentiel', 'Routier', 'Tertiaire']].sum().reset_index()
         data_by_sector['index'] = ['Agriculture', 'Other transports', 'Waste', 'Energy', 'Industry excluding energy', 'Residential', 'Road', 'Tertiary']
         data_by_sector.columns = ['Secteur', 'Emissions']
